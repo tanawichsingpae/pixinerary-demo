@@ -49,7 +49,7 @@ export function PixineraryDemoModal({ onLaunchSampleTrip, children }: Pixinerary
   const goPrevious = () => setStep((value) => Math.max(value - 1, 0))
 
   return <Dialog open={open} onOpenChange={setOpen}>
-    {children ? <DialogTrigger asChild>{children}</DialogTrigger> : <DialogTrigger asChild><DemoButton onLaunchSampleTrip={onLaunchSampleTrip} /></DialogTrigger>}
+    {children ? <DialogTrigger>{children}</DialogTrigger> : <DialogTrigger><DemoButton onLaunchSampleTrip={onLaunchSampleTrip} /></DialogTrigger>}
     <DialogContent className="max-h-[94vh] overflow-y-auto border-white/60 bg-white/90 p-0 shadow-2xl shadow-sky-950/20 backdrop-blur-xl sm:max-w-5xl dark:border-white/10 dark:bg-slate-950/90">
       <div className="relative overflow-hidden rounded-[inherit]">
         <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-sky-300/25 blur-3xl" />

@@ -1,47 +1,46 @@
-export default function Page() {
-  return (
-    <main
-      style={{
-        colorScheme: 'light dark',
-        position: 'relative',
-        display: 'flex',
-        minHeight: '100vh',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'light-dark(#fff, #000)',
-        color: 'light-dark(#000, #fff)',
-      }}
-    >
-      <svg
-        aria-hidden="true"
-        style={{ width: 80, height: 80 }}
-        width={80}
-        height={80}
-        fill="none"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="currentColor"
-        strokeWidth="0.5"
-      >
-        <path
-          d="M14.2 14.2H17V6.9375C17 4.76288 15.2371 3 13.0625 3H5.8V5.8M14.2 14.2V7.79063L7.79062 14.2H14.2ZM14.2 14.2V17H6.9375C4.76288 17 3 15.2371 3 13.0625V5.8H5.8M5.8 5.8V12.2313L12.2313 5.8H5.8Z"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <p
-        style={{
-          position: 'absolute',
-          left: '50%',
-          top: 'calc(50% + 56px)',
-          transform: 'translateX(-50%)',
-          whiteSpace: 'nowrap',
-          fontSize: '14px',
-          fontWeight: 500,
-          color: 'light-dark(#71717a, #a1a1aa)',
-        }}
-      >
-        Your v0 generation will show here.
-      </p>
-    </main>
-  )
+'use client'
+
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowLeft, ArrowRight, CalendarDays, Check, CloudSun, Compass, Download, GripVertical, ImagePlus, MapPin, Plane, Play, ScanLine, Sparkles, Utensils, X } from 'lucide-react'
+
+type DemoButtonProps = { onClick?: () => void }
+type PixineraryDemoModalProps = { open: boolean; onOpenChange: (open: boolean) => void; onLaunchSampleTrip?: () => void }
+
+const steps = [
+  ['รู้จักสถานที่จากภาพ', 'Image-based recognition'],
+  ['ตรวจจับแลนด์มาร์ก', 'Smart landmark detection'],
+  ['ปรับแต่งทริปของคุณ', 'Trip preferences'],
+  ['สร้างแผนเที่ยวอัจฉริยะ', 'AI itinerary & map'],
+]
+
+export function DemoButton({ onClick }: DemoButtonProps) {
+  return <button onClick={onClick} className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-xl shadow-sky-500/20 transition hover:-translate-y-0.5 hover:shadow-sky-500/40 dark:bg-white dark:text-slate-950"><span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition duration-700 group-hover:translate-x-full" /><Sparkles className="relative size-4 text-sky-300 dark:text-blue-600" /><span className="relative">ชมตัวอย่างระบบ <span className="font-normal text-white/60 dark:text-slate-500">(Interactive Demo)</span></span></button>
 }
+
+function Preview({ step }: { step: number }) {
+  if (step === 0) return <div className="relative flex min-h-[285px] flex-col items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-sky-50 via-white to-violet-50 p-6 dark:from-slate-900 dark:to-indigo-950/50"><div className="absolute left-1/2 top-1/2 h-px w-3/4 -translate-x-1/2 bg-sky-400 shadow-[0_0_18px_5px] shadow-sky-400/60" /><motion.div animate={{ y: [-90, 90, -90] }} transition={{ duration: 3, repeat: Infinity }} className="absolute left-1/2 top-1/2 h-24 w-3/4 -translate-x-1/2 border-b border-sky-400/20" /><div className="relative mb-5 flex size-28 rotate-[-5deg] items-center justify-center rounded-2xl border-4 border-white bg-gradient-to-br from-orange-200 via-amber-100 to-sky-200 shadow-2xl dark:border-slate-700"><span className="text-5xl">วัด</span><ScanLine className="absolute right-2 top-2 size-4 text-sky-600" /></div><p className="text-sm font-semibold text-slate-900 dark:text-white">วางภาพสถานที่ของคุณที่นี่</p><p className="mt-1 text-xs text-slate-500">ลากไฟล์ หรือคลิกเพื่ออัปโหลด</p><div className="mt-4 flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-medium text-sky-700 shadow-sm dark:bg-slate-800/80 dark:text-sky-300"><Sparkles className="size-3" /> AI Vision & CLIP กำลังสแกน</div></div>
+  if (step === 1) return <div className="grid min-h-[285px] gap-4 rounded-2xl bg-gradient-to-br from-violet-50 to-sky-50 p-4 sm:grid-cols-[1.05fr_1fr] dark:from-indigo-950/60 dark:to-slate-900"><div className="relative flex min-h-40 items-end overflow-hidden rounded-xl bg-gradient-to-br from-orange-200 via-amber-100 to-sky-200 p-4"><div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900/40 to-transparent" /><span className="relative text-2xl font-bold text-white">Wat Arun</span><span className="absolute right-3 top-3 rounded-full bg-white/80 px-2 py-1 text-[10px] font-semibold text-slate-700">98% match</span></div><div className="flex flex-col justify-center"><div className="mb-2 flex items-center gap-2 text-xs font-semibold text-violet-600"><MapPin className="size-4" /> ระบุสถานที่ได้แล้ว</div><h3 className="text-xl font-bold text-slate-900 dark:text-white">Wat Arun</h3><p className="text-xs text-slate-500">Bangkok, Thailand</p><div className="mt-4 flex flex-wrap gap-2"><span className="rounded-full bg-white px-2.5 py-1 text-[11px] text-slate-600 shadow-sm dark:bg-slate-800 dark:text-slate-300">13.7437° N</span><span className="flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-[11px] font-semibold text-amber-700"><CloudSun className="size-3" /> 28°C Sunny</span></div><div className="mt-4 h-1.5 overflow-hidden rounded-full bg-violet-100"><motion.div initial={{ width: 0 }} animate={{ width: '98%' }} className="h-full rounded-full bg-gradient-to-r from-sky-400 to-violet-500" /></div></div></div>
+  if (step === 2) return <Preferences />
+  return <Itinerary />
+}
+
+function Preferences() { const [days, setDays] = useState(3); return <div className="min-h-[285px] rounded-2xl bg-gradient-to-br from-sky-50 to-white p-5 dark:from-slate-900 dark:to-indigo-950/40"><div className="flex items-start justify-between"><div><p className="text-xs font-medium text-sky-600">STEP 03 / PREFERENCES</p><h3 className="mt-1 text-xl font-bold text-slate-900 dark:text-white">ทริปในสไตล์ของคุณ</h3></div><div className="rounded-xl bg-sky-100 p-2 text-sky-600"><Compass className="size-5" /></div></div><div className="mt-7"><div className="mb-3 flex justify-between text-xs text-slate-500"><span>ระยะเวลาเดินทาง</span><strong className="text-slate-900 dark:text-white">{days} วัน</strong></div><div className="flex gap-2">{[1,2,3,4,5,6,7].map(d => <button key={d} onClick={() => setDays(d)} className={`size-8 rounded-lg text-xs font-semibold ${days === d ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950' : 'bg-white text-slate-400 dark:bg-slate-800'}`}>{d}</button>)}</div></div><div className="mt-7"><p className="mb-3 text-xs text-slate-500">สไตล์การเที่ยวที่ชอบ</p><div className="flex flex-wrap gap-2"><span className="flex items-center gap-1 rounded-full bg-orange-100 px-3 py-1.5 text-xs font-semibold text-orange-700"><Utensils className="size-3" /> Foodie</span><span className="rounded-full bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-700">วัฒนธรรม</span><span className="rounded-full border border-slate-200 px-3 py-1.5 text-xs text-slate-500">Chill</span><span className="rounded-full border border-slate-200 px-3 py-1.5 text-xs text-slate-500">Adventure</span></div></div></div> }
+
+function Itinerary() { return <div className="grid min-h-[285px] gap-4 rounded-2xl bg-gradient-to-br from-slate-50 to-sky-50 p-4 sm:grid-cols-[1fr_.9fr] dark:from-slate-900 dark:to-indigo-950/40"><div><div className="mb-3 flex items-center justify-between"><div><p className="text-[10px] font-bold tracking-widest text-violet-600">YOUR AI ITINERARY</p><h3 className="text-lg font-bold text-slate-900 dark:text-white">Day 1 · Bangkok</h3></div><Download className="size-4 text-slate-400" /></div>{[['09:00','Wat Arun'],['11:30','ตลาดวังหลัง'],['14:00','สำรวจย่านเมืองเก่า']].map(([time,name]) => <div key={time} className="mb-2 flex items-center gap-3 rounded-xl border border-white bg-white/70 p-2.5 shadow-sm dark:border-slate-800 dark:bg-slate-800/70"><GripVertical className="size-3 text-slate-300" /><span className="rounded-md bg-sky-100 px-2 py-1 text-[10px] font-bold text-sky-700">{time}</span><span className="text-xs font-medium text-slate-700 dark:text-slate-200">{name}</span></div>)}</div><div className="relative overflow-hidden rounded-xl bg-[#dceeea] dark:bg-[#183c42]"><div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'linear-gradient(30deg, transparent 48%, #78b9b1 49%, #78b9b1 51%, transparent 52%), linear-gradient(120deg, transparent 48%, #78b9b1 49%, #78b9b1 51%, transparent 52%)', backgroundSize: '42px 42px' }} /><svg viewBox="0 0 180 180" className="relative size-full p-7" aria-label="Stylized route map"><path d="M20 140 C48 110,48 70,82 78 S120 120,155 38" fill="none" stroke="#7c3aed" strokeWidth="4" strokeDasharray="7 5" /><circle cx="20" cy="140" r="7" fill="white" stroke="#7c3aed" strokeWidth="4" /><circle cx="82" cy="78" r="7" fill="white" stroke="#0ea5e9" strokeWidth="4" /><circle cx="155" cy="38" r="7" fill="white" stroke="#7c3aed" strokeWidth="4" /></svg><span className="absolute bottom-3 left-3 rounded-full bg-white/80 px-2 py-1 text-[10px] font-semibold text-slate-600">Interactive route</span></div></div> }
+
+export function PixineraryDemoModal({ open, onOpenChange, onLaunchSampleTrip }: PixineraryDemoModalProps) {
+  const [step, setStep] = useState(0)
+  const [autoPlay, setAutoPlay] = useState(true)
+  useEffect(() => { if (!open || !autoPlay) return; const id = window.setInterval(() => setStep((value) => (value + 1) % 4), 4000); return () => window.clearInterval(id) }, [open, autoPlay])
+  useEffect(() => { document.body.style.overflow = open ? 'hidden' : ''; return () => { document.body.style.overflow = '' } }, [open])
+  if (!open) return null
+  return <div role="dialog" aria-modal="true" aria-labelledby="demo-title" className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/50 p-3 backdrop-blur-md sm:p-6"><motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="relative my-auto w-full max-w-4xl overflow-hidden rounded-[28px] border border-white/70 bg-white/90 shadow-2xl backdrop-blur-2xl dark:border-slate-700 dark:bg-slate-950/90"><button aria-label="Close demo" onClick={() => onOpenChange(false)} className="absolute right-4 top-4 z-10 rounded-full p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"><X className="size-5" /></button><div className="border-b border-slate-200 px-5 pb-5 pt-6 sm:px-8"><div className="flex items-center gap-3"><div className="flex size-10 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-600 text-white"><Plane className="size-5 -rotate-12" /></div><div><h1 id="demo-title" className="text-lg font-bold text-slate-950 dark:text-white">Pixinerary <span className="font-normal text-slate-400">/ Vision Trip Planner</span></h1><p className="text-xs text-slate-500">ดูการทำงานของ AI ใน 4 ขั้นตอน</p></div><button onClick={() => setAutoPlay(!autoPlay)} className="ml-auto mr-8 flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-medium text-sky-700"><Play className="size-3" /> Auto-Play {autoPlay ? 'On' : 'Off'}</button></div><div className="mt-6 grid grid-cols-4 gap-2">{steps.map(([title, subtitle], index) => <button key={title} onClick={() => setStep(index)} className="text-left"><div className="mb-2 flex items-center gap-2"><span className={`flex size-7 items-center justify-center rounded-full text-xs font-bold ${index <= step ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950' : 'bg-slate-100 text-slate-400'}`}>{index < step ? <Check className="size-3" /> : index + 1}</span><span className="hidden text-[10px] font-semibold text-slate-500 sm:block">{subtitle}</span></div><div className={`h-1 rounded-full ${index <= step ? 'bg-gradient-to-r from-sky-400 to-violet-500' : 'bg-slate-100'}`} /></button>)}</div></div><div className="p-4 sm:p-8"><AnimatePresence mode="wait"><motion.div key={step} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }}><p className="text-xs font-bold tracking-widest text-sky-600">STEP 0{step + 1}</p><h2 className="mb-4 mt-1 text-2xl font-bold text-slate-950 dark:text-white">{steps[step][0]}</h2><Preview step={step} /></motion.div></AnimatePresence><div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between"><div className="flex items-center justify-center gap-2">{steps.map((_, index) => <button key={index} aria-label={`Go to step ${index + 1}`} onClick={() => setStep(index)} className={`size-2 rounded-full ${index === step ? 'w-6 bg-sky-500' : 'bg-slate-200'}`} />)}</div><div className="flex gap-2"><button disabled={!step} onClick={() => setStep(step - 1)} className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 disabled:opacity-40"><ArrowLeft className="size-4" /> ย้อนกลับ</button>{step < 3 ? <button onClick={() => setStep(step + 1)} className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white dark:bg-white dark:text-slate-950">ถัดไป <ArrowRight className="size-4" /></button> : <button onClick={onLaunchSampleTrip} className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-violet-600 px-5 py-2.5 text-sm font-semibold text-white"><Sparkles className="size-4" /> ทดลองเล่นทริปตัวอย่างทันที</button>}</div></div></div></motion.div></div>
+}
+
+export default function Page() {
+  const [open, setOpen] = useState(false)
+  return <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f7fbff] px-6 py-16 dark:bg-slate-950"><div className="absolute left-1/2 top-0 size-[600px] -translate-x-1/2 rounded-full bg-sky-200/30 blur-3xl" /><div className="relative z-10 max-w-2xl text-center"><div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-400 to-violet-600 text-white shadow-xl"><Plane className="size-8 -rotate-12" /></div><p className="mb-3 text-sm font-bold uppercase tracking-[.25em] text-sky-600">Pixinerary · Vision Trip Planner</p><h1 className="text-4xl font-bold tracking-tight text-slate-950 sm:text-6xl dark:text-white">เปลี่ยนภาพถ่าย<br /><span className="bg-gradient-to-r from-sky-500 to-violet-600 bg-clip-text text-transparent">ให้กลายเป็นทริป</span></h1><p className="mx-auto mt-6 max-w-lg text-base leading-7 text-slate-500">AI วางแผนการเดินทางที่รู้ใจคุณ ตั้งแต่ภาพถ่ายสถานที่ไปจนถึง itinerary พร้อมออกเดินทาง</p><div className="mt-9"><DemoButton onClick={() => setOpen(true)} /></div></div><PixineraryDemoModal open={open} onOpenChange={setOpen} onLaunchSampleTrip={() => setOpen(false)} /></main>
+}
+
+export type { DemoButtonProps, PixineraryDemoModalProps }
